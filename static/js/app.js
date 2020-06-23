@@ -12,53 +12,37 @@ function buildCharts(sample) {
         actualSample = filteredSample[0];
         console.log(actualSample);
         // Zip 3 arrays of actualSample together
-        // function zip(arrays) {
-        //     return arrays[1].map(function(_,i){
-        //         return arrays.map(function(array){return array[i]})
-        //     });
-        // }
-        // zippedSample = zip(actualSample.otu_ids, actualSample.otu_labels, actualSample.sample_values);
+        zippedSample = d3.zip(actualSample.otu_ids, actualSample.otu_labels, actualSample.sample_values);
         // console.log(zippedSample);
-
-        // zip1 = actualSample.otu_ids.map(function(e, i) {
-        //     return [e, actualSample.otu_labels[i]];
-        // });
-        // console.log(zip1);
-        // zip2 = zip1.map(function(e,i) {
-        //     return [e, actualSample.sample_values[i]];
-        // });
-        // // returns 2 zipped into an array and 1 zipped outside
-        // console.log(zip2);
-
+        
         // Sort sample values
-        // sortedSample = actualSample.sort((a,b) => b - a);
+        sortedSample = zippedSample.sort((a,b) => b[2] - a[2]);
         // console.log(sortedSample);
 
         // // Slice to get top 10 sample values
-        // topSample = sortedSample.slice(0,10);
-        // console.log(topSample);
-        // reversedSample = topSample.reverse();
-        // console.log(reversedSample);
+        topSample = sortedSample.slice(0,10);
+        console.log(topSample);
+        reversedSample = topSample.reverse();
+        console.log(reversedSample);
 
     
-        // Create bar chart
-        // var trace1 = {
-        //     x: reversedSample,
-        //     // y: reversedSample.otu_ids,
-        //     text: reversedSample.otu_labels,
-        //     y: actualSample.map(object => object.otu_ids),
-        //     // text: actualSample.map(object => object.otu_labels),
-        //     type: "bar",
-        //     orientation: "h"
-        // };
+        // Create bar chart (values = sample_values[2], labels= otu_ids[0], hovertext = otu_labels[1])
+        var trace1 = {
+            x: reversedSample[2],
+            y: reversedSample[0],
+            hovertext: reversedSample[1],
+            type: "bar",
+            orientation: "h"
+        };
 
-        // var data = [trace1];
+        var data = [trace1];
 
-        // var layout= {
-        //     title: `Top 10 Bacteria for Sample # ${sample}`
-        // }
+        var layout= {
+            title: `Top 10 Bacteria for Sample # ${sample}`,
 
-        // Plotly.newPlot("bar", data, layout);
+        }
+
+        Plotly.newPlot("bar", data, layout);
 
         // Creat Bubble Chart
         var trace2 = {
@@ -68,9 +52,9 @@ function buildCharts(sample) {
             marker: {
                 size: actualSample.sample_values,
                 color: actualSample.otu_ids,
-                showscale: true
+                colorscale: "Viridis"
             },
-            text: actualSample.otu_labels
+            hovertext: actualSample.otu_labels
         };
 
         var data1 = [trace2];
@@ -82,6 +66,52 @@ function buildCharts(sample) {
         Plotly.newPlot("bubble", data1, layout);
 
     })
+}
+
+function buildGauge(sample){
+    d3.json("/samples.json").then(function(data) {
+        console.log(data);
+
+        // Find data for selected sample
+        var sampleData = data.metadata;
+        console.log(sampleData);
+        console.log(sample);
+        var filteredSample = sampleData.filter(function(sampleObj){
+            return sampleObj.id == sample;
+        })
+        actualSample = filteredSample[0];
+        console.log(actualSample);
+
+        // Build gauge plot
+        var data = [
+            {
+              type: "indicator",
+              value: 200,
+              delta: { reference: 160 },
+              gauge: { axis: { visible: false, range: [0, 250] } },
+              domain: { row: 0, column: 0 }
+            }];
+        // var trace3 = [
+        //     {
+        //         domain: { x: [0, 1], y: [0, 1] },
+        //         value: actualSample.wfreq,
+        //         title: { text: "Belly Button Washing Frequency (Scrubs per Week)" },
+        //         type: "indicator",
+        //         mode: "gauge+number",
+        //         gauge: { 
+        //             axis: {
+        //                 visible: false,
+        //                 range: [0-7]
+        //             },
+        //         },
+
+        //     }
+        // ];
+        // var data2 = [trace3];
+        var layout = { width: 500, height: 400, margin: { t: 10, b: 10 } };
+        Plotly.newPlot("gauge", data, layout);
+    })
+
 }
 
 
@@ -136,6 +166,7 @@ function init() {
         firstId = testId[0];
         buildCharts(firstId);
         getMetadata(firstId);
+        buildGauge(firstId);
     })
 }
 
@@ -144,6 +175,7 @@ function optionChanged(changedSample) {
     console.log(changedSample);
     buildCharts(changedSample);
     getMetadata(changedSample);
+    buildGauge(changedSample)
 }
 
 init()
