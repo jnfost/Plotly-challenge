@@ -15,31 +15,37 @@ function buildCharts(sample) {
         zippedSample = d3.zip(actualSample.otu_ids, actualSample.otu_labels, actualSample.sample_values);
         // console.log(zippedSample);
         
-        // Sort sample values
-        sortedSample = zippedSample.sort((a,b) => b[2] - a[2]);
+        // Sort sample values ascending
+        sortedSample = zippedSample.sort((a,b) => a[2] - b[2]);
         // console.log(sortedSample);
 
-        // // Slice to get top 10 sample values
-        topSample = sortedSample.slice(0,10);
+        // // Slice to get top 10 sample values (last 10 entries)
+        topSample = sortedSample.slice(-10);
         console.log(topSample);
         reversedSample = topSample.reverse();
         console.log(reversedSample);
-
+       
     
         // Create bar chart (values = sample_values[2], labels= otu_ids[0], hovertext = otu_labels[1])
         var trace1 = {
-            x: reversedSample[2],
-            y: reversedSample[0],
-            hovertext: reversedSample[1],
+            x: reversedSample.map(testSample => testSample[2]),
+            y: reversedSample.map(testSample => testSample[0].toString()),
+            hovertext: reversedSample.map(testSample => testSample[1]),
             type: "bar",
             orientation: "h"
         };
-
+        console.log(reversedSample.map(testSample => testSample[2]));
         var data = [trace1];
 
         var layout= {
             title: `Top 10 Bacteria for Sample # ${sample}`,
-
+            
+            // margin: {
+            //     l: 100,
+            //     r: 100,
+            //     t: 100,
+            //     b: 100
+            //   }
         }
 
         Plotly.newPlot("bar", data, layout);
