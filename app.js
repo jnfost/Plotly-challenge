@@ -1,5 +1,5 @@
 function buildCharts(sample) {
-    d3.json("/samples.json").then(function(data) {
+    d3.json("/data/samples.json").then(function(data) {
         console.log(data);
 
         // Find data for selected sample
@@ -69,7 +69,7 @@ function buildCharts(sample) {
 }
 
 function buildGauge(sample){
-    d3.json("/samples.json").then(function(data) {
+    d3.json("/data/samples.json").then(function(data) {
         console.log(data);
 
         // Find data for selected sample
@@ -117,7 +117,7 @@ function buildGauge(sample){
 
 
 function getMetadata(sample) {
-    d3.json("/samples.json").then(function(data) {
+    d3.json("/data/samples.json").then(function(data) {
         // console.log(data);
         var sampleData = data.metadata;
         console.log(sampleData);
@@ -147,7 +147,7 @@ function getMetadata(sample) {
 
 // Initialize page with data from first sample
 function init() {
-    d3.json("/samples.json").then(function(data) {
+    d3.json("/data/samples.json").then(function(data) {
         // console.log(data);
         var testId = data.names;
         // console.log(testId);
