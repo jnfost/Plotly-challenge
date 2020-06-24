@@ -161,7 +161,7 @@ function getMetadata(sample) {
 
 // Initialize page with data from first sample
 function init() {
-    d3.json("/data/samples.json").then(function(data) {
+    d3.json("data/samples.json").then(function(data) {
         // console.log(data);
         var testId = data.names;
         // console.log(testId);
