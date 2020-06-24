@@ -25,12 +25,12 @@ function buildCharts(sample) {
         reversedSample = topSample.reverse();
         console.log(reversedSample);
        
-        otuIds = reversedSample.map(testSample => testSample[0].toString());
+        var otuIds = reversedSample.map(testSample => testSample[0].toString());
         console.log(otuIds);
         // Create bar chart (values = sample_values[2], labels= otu_ids[0], hovertext = otu_labels[1])
         var trace1 = {
             x: reversedSample.map(testSample => testSample[2]),
-            // y: reversedSample.map(testSample => testSample[0].toString()),
+            // y: otuIds,
             hovertext: reversedSample.map(testSample => testSample[1]),
             type: "bar",
             orientation: "h"
@@ -177,10 +177,10 @@ function init() {
             
         });
       
-        firstId = testId[0];
+        var firstId = testId[0];
         buildCharts(firstId);
         getMetadata(firstId);
-        buildGauge(firstId);
+        // buildGauge(firstId);
     })
 }
 
