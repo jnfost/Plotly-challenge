@@ -48,12 +48,6 @@ function buildCharts(sample) {
             },
             
             
-            // margin: {
-            //     l: 100,
-            //     r: 100,
-            //     t: 100,
-            //     b: 100
-            //   }
         }
 
         Plotly.newPlot("bar", data, layout);
@@ -82,51 +76,6 @@ function buildCharts(sample) {
     })
 }
 
-// function buildGauge(sample){
-//     d3.json("/data/samples.json").then(function(data) {
-//         console.log(data);
-
-//         // Find data for selected sample
-//         var sampleData = data.metadata;
-//         console.log(sampleData);
-//         console.log(sample);
-//         var filteredSample = sampleData.filter(function(sampleObj){
-//             return sampleObj.id == sample;
-//         })
-//         actualSample = filteredSample[0];
-//         console.log(actualSample);
-
-//         // Build gauge plot
-//         var data = [
-//             {
-//               type: "indicator",
-//               value: 200,
-//               delta: { reference: 160 },
-//               gauge: { axis: { visible: false, range: [0, 250] } },
-//               domain: { row: 0, column: 0 }
-//             }];
-//         // var trace3 = [
-//         //     {
-//         //         domain: { x: [0, 1], y: [0, 1] },
-//         //         value: actualSample.wfreq,
-//         //         title: { text: "Belly Button Washing Frequency (Scrubs per Week)" },
-//         //         type: "indicator",
-//         //         mode: "gauge+number",
-//         //         gauge: { 
-//         //             axis: {
-//         //                 visible: false,
-//         //                 range: [0-7]
-//         //             },
-//         //         },
-
-//         //     }
-//         // ];
-//         // var data2 = [trace3];
-//         var layout = { width: 500, height: 400, margin: { t: 10, b: 10 } };
-//         Plotly.newPlot("gauge", data, layout);
-//     })
-
-// }
 
 
 
@@ -180,7 +129,7 @@ function init() {
         var firstId = testId[0];
         buildCharts(firstId);
         getMetadata(firstId);
-        // buildGauge(firstId);
+        
     })
 }
 
@@ -189,7 +138,6 @@ function optionChanged(changedSample) {
     console.log(changedSample);
     buildCharts(changedSample);
     getMetadata(changedSample);
-    buildGauge(changedSample)
 }
 
 init()
