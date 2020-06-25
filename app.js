@@ -25,7 +25,7 @@ function buildCharts(sample) {
         reversedSample = topSample.reverse();
         console.log(reversedSample);
        
-        var otuIds = reversedSample.map(testSample => testSample[0].toString());
+        var otuIds = reversedSample.map(testSample => testSample[0]);
         console.log(otuIds);
         // Create bar chart (values = sample_values[2], labels= otu_ids[0], hovertext = otu_labels[1])
         var trace1 = {
@@ -39,7 +39,7 @@ function buildCharts(sample) {
         var data = [trace1];
 
         var layout= {
-            title: `Top 10 Bacteria for Sample # ${sample}`,
+            title: `Top 10 Bacteria for Sample #${sample}`,
             xaxis: {
                 title: "Sample Values"
             },
@@ -68,7 +68,7 @@ function buildCharts(sample) {
         var data1 = [trace2];
 
         var layout = {
-            title: `All OTUs for Sample# ${sample}`,
+            title: `All OTUs for Sample #${sample}`,
             xaxis: {
                 title: "OTU ID"
             }
