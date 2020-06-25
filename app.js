@@ -68,7 +68,10 @@ function buildCharts(sample) {
         var data1 = [trace2];
 
         var layout = {
-            title: `All Data for Sample# ${sample}`
+            title: `All OTUs for Sample# ${sample}`,
+            xaxis: {
+                title: "OTU ID"
+            }
         }
 
         Plotly.newPlot("bubble", data1, layout);
