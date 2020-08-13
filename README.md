@@ -34,7 +34,7 @@ Retrieved from: http://robdunnlab.com/projects/belly-button-biodiversity/results
 
 * Create a bubble chart that displays each sample.
 
-![](Images/Bubble.png)
+![](Images/Bar.png)
 
 * Display the sample metadata, i.e., and individual's demographic information.
 
